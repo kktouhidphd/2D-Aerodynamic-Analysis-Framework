@@ -1,0 +1,11 @@
+name: aero_analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.9
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - pip
