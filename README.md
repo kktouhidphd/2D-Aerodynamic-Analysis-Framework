@@ -38,7 +38,6 @@ This framework specifically addresses stability issues in analyzing laminar flow
 ## 📁 Project Structure
 
 ```text
-.
 ├── init_project.py              # Setup script (Run this first!)
 ├── README.md                    # Documentation
 ├── CITATION.cff                 # Citation file
@@ -59,3 +58,102 @@ This framework specifically addresses stability issues in analyzing laminar flow
     ├── xfoil_results/           # Raw polar files & convergence logs
     ├── plots_separated/         # Individual high-res performance curves
     └── comparisons_full/        # Grid visualizations (Streamlines/Pressure)
+```
+## 🛠️ Installation
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/kktouhidphd/2D-Aerodynamic-Analysis-Framework.git](https://github.com/kktouhidphd/2D-Aerodynamic-Analysis-Framework.git)
+cd 2D-Aerodynamic-Analysis-Framework
+```
+### 2. Install Python Dependencies
+Option A: Conda (Recommended)
+```bash
+conda env create -f environment.yml
+conda activate aero_analysis
+```
+Option B: Pip
+```bash
+pip install -r requirements.txt
+```
+### 3. Install XFOIL (Critical)
+The backend requires the ```xfoil``` binary to be executable in your system path.
+
+🐧 Linux / WSL:
+```bash
+sudo apt-get update && sudo apt-get install xfoil
+```
+🍎 macOS:
+```bash
+brew install xfoil
+```
+🪟 Windows:
+1. Download XFOIL from the MIT Website.
+
+2. Extract the zip file.
+
+3. Copy ```xfoil.exe``` and place it in the root folder of this project (same folder as this README).
+### 4. Initialization
+Run the setup script to verify your environment and create data folders:
+```bash
+python init_project.py
+```
+🔬 Execution Workflow
+Run the scripts in the ```scripts/ directory``` in numerical order to perform the full analysis pipeline.
+
+Step 1: Geometry Generation
+```bash
+python scripts/1_generate_naca_files.py
+```
+Step 2: Geometry Refinement
+
+Applies Parametric B-Splines to smooth the leading edge and re-distributes panel density (N=160) using cosine clustering to capture high-gradient flow regions.
+```bash
+python scripts/2_refine_airfoils.py
+```
+Step 3: Viscous Analysis (XFOIL)
+Runs the automated CFD sweep. This script automatically detects 6-series airfoils and switches to "Nuclear Stability Mode" (Geometry Surgery + Damped Solver) to ensure convergence.
+```bash
+python scripts/3_xfoil_analyzer.py
+```
+Step 4: Diagnostics (Optional)
+
+If Step 3 fails silently or crashes, run this diagnostic tool to check if XFOIL is reachable.
+```bash
+python scripts/4_xfoil_debug.py
+```
+Step 5: Hybrid Visualization
+```bash
+python scripts/5_panel_method_comparison_full.py
+```
+## 📊 Output Examples
+
+The `results/` directory will contain:
+
+* **Performance Curves:** High-resolution comparison of Lift Coefficient, Drag Coefficient, Moment Coefficient and L/D vs Angle of Attack (AoA).
+    * *Location:* `results/plots_separated/Comparison_Efficiency.png`
+* **Flow Field Grids:** Side-by-side comparison of streamlines and velocity magnitude for all airfoils at specific angles.
+    * *Location:* `results/comparisons_full/Comp_Grid_Velocity_a4.0.png`
+* **Raw Data:** `.polar` files compatible with Excel or other plotting tools.
+    * *Location:* `results/xfoil_results/polar_files/`
+
+## 📄 Citation
+
+If you use this framework in your research or academic work, please cite it as:
+
+```bibtex
+@software{AeroFramework2025,
+  author = {Khalid, Khwaja Mohamed},
+  title = {2D Aerodynamic Airfoil Analysis Framework},
+  year = {2025},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{[https://github.com/kktouhidphd/2D-Aerodynamic-Analysis-Framework](https://github.com/kktouhidphd/2D-Aerodynamic-Analysis-Framework)}}
+}
+```
+## 📧 Contact
+For questions or collaboration:
+    Author: Khwaja Mohamed Khalid
+    GitHub: @kktouhidphd
+
+
