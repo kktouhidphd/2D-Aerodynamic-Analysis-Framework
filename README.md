@@ -81,7 +81,8 @@ The backend requires the ```xfoil``` binary to be executable in your system path
 
 🐧 Linux / WSL:
 ```bash
-sudo apt-get update && sudo apt-get install xfoil
+sudo apt-get update
+sudo apt-get install xfoil
 ```
 🍎 macOS:
 ```bash
@@ -156,6 +157,7 @@ For questions or collaboration:
 
     Author: Khwaja Mohamed Khalid
     GitHub: @kktouhidphd
+
 
 
 
